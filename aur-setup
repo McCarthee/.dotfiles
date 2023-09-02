@@ -1,11 +1,43 @@
 #!/bin/bash
 
-sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-sudo pacman-key --lsign-key 3056513887B78AEB
-sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+echo -en "\n"
+if grep -Fxq "[chaotic-aur]" /etc/pacman.conf
+then
+    echo -en "[chaotic-aur] already exists in pacman.conf. Skipping...\n"
+    sleep 2
+else
+    echo -en "Installing chaotic-aur..."
+    sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com &> /dev/null
+    sudo pacman-key --lsign-key 3056513887B78AEB &> /dev/null
+    sudo pacman --noconfirm -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' &> /dev/null
+    echo -en "\n" | sudo tee -a /etc/pacman.conf
+    echo "[chaotic-aur]" | sudo tee -a /etc/pacman.conf
+    echo "Include = /etc/pacman.d/chaotic-mirrorlist" | sudo tee -a /etc/pacman.conf    
+    sleep 2
+fi
 
-echo '\n' >> /etc/pacman.conf
-echo '[chaotic-aur]' >> /etc/pacman.conf
-echo 'Include = /etc/pacman.d/chaotic-mirrorlist' >> /etc/pacman.conf
+sudo sed -i "s/#Color/Color/" /etc/pacman.conf
+sudo sed -i "s/#VerbosePkgLists/VerbosePkgLists/" /etc/pacman.conf
+sudo sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/" /etc/pacman.conf
 
-sudo pacman -Syy
+if grep -Fxq "ILoveCandy" /etc/pacman.conf
+then
+    echo -en "ILoveCandy already exists in pacman.conf. Skipping...\n"
+    sleep 2
+else
+    sudo sed -i "/ParallelDownloads = 10/a ILoveCandy" /etc/pacman.conf
+fi
+
+sudo pacman -Syy --noconfirm > /dev/null
+
+if pacman -Qi paru > /dev/null
+then
+    echo -en "Paru is already installed. Skipping..."
+    sleep 2
+else
+    echo "Installing Paru..."
+    sudo pacman --noconfirm -S paru > /dev/null
+    sleep 2
+fi
+
+echo -en "\n"
