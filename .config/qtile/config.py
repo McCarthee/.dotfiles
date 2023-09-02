@@ -129,6 +129,7 @@ screens = [
                 # Left widgets #
                 ################
                 widget.GroupBox(
+                    hide_unused=True,
                     padding_x=6,
                     borderwidth=4,
                     highlight_method="line",
