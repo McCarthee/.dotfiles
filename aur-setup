@@ -28,15 +28,15 @@ else
     sudo sed -i "/ParallelDownloads = 10/a ILoveCandy" /etc/pacman.conf
 fi
 
-sudo pacman -Syy --noconfirm > /dev/null
+sudo pacman -Syy --noconfirm &> /dev/null
 
-if pacman -Qi paru > /dev/null
+if pacman -Qi paru &> /dev/null
 then
     echo -en "Paru is already installed. Skipping..."
     sleep 2
 else
     echo "Installing Paru..."
-    sudo pacman --noconfirm -S paru > /dev/null
+    sudo pacman --noconfirm -S paru &> /dev/null
     sleep 2
 fi
 
