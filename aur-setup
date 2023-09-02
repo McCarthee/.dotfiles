@@ -10,7 +10,7 @@ fi
 if grep -Fxq "[chaotic-aur]" /etc/pacman.conf
 then
     echo -en "\n"
-    echo -en "chaotic-aur is already installed. Skipping...\n"
+    echo -en "chaotic-aur is already installed. Skipping..."
     sleep 2
 else
     echo -en "\n"
@@ -55,4 +55,4 @@ else
     sleep 2
 fi
 
-echo -en "\n"
+echo -en "\n\n"
