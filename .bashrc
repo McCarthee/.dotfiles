@@ -11,3 +11,4 @@ PS1='[\u@\h \W]\$ '
 
 alias ls='exa'
 alias la='exa -la'
+alias vim=nvim
