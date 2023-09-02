@@ -32,7 +32,7 @@ sudo sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/" /etc/pacman.conf 
 if grep -Fxq "ILoveCandy" /etc/pacman.conf
 then
     echo -en "\n"
-    echo -en "ILoveCandy already exists in pacman.conf. Skipping...\n"
+    echo -en "ILoveCandy already exists in pacman.conf. Skipping..."
     sleep 2
 else
     sudo sed -i "/ParallelDownloads = 10/a ILoveCandy" /etc/pacman.conf
@@ -49,7 +49,7 @@ then
     sleep 2
 else
     echo -en "\n"
-    echo "Installing Paru..."
+    echo -en "Installing Paru..."
     sudo pacman --noconfirm -S paru &> /dev/null
     sudo sed -i "s/#BottomUp/BottomUp/" /etc/paru.conf &> /dev/null
     sleep 2
