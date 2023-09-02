@@ -1,29 +1,33 @@
 #!/bin/bash
 
+# Elevate the script
 if [ $EUID != 0 ]; then
     sudo "$0" "$@"
     exit $?
 fi
 
 echo -en "\n"
+
+# Install chaotic-aur
 if grep -Fxq "[chaotic-aur]" /etc/pacman.conf
 then
-    echo -en "[chaotic-aur] already exists in pacman.conf. Skipping...\n"
+    echo -en "chaotic-aur is already installed. Skipping...\n"
     sleep 2
 else
     echo -en "Installing chaotic-aur..."
-    sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
+    sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com &> /dev/null
     sudo pacman-key --lsign-key 3056513887B78AEB
-    sudo pacman --noconfirm -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+    sudo pacman --noconfirm -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' &> /dev/null
     echo -en "\n" | sudo tee -a /etc/pacman.conf &> /dev/null
     echo "[chaotic-aur]" | sudo tee -a /etc/pacman.conf &> /dev/null
     echo "Include = /etc/pacman.d/chaotic-mirrorlist" | sudo tee -a /etc/pacman.conf &> /dev/null    
     sleep 2
 fi
 
-sudo sed -i "s/#Color/Color/" /etc/pacman.conf
-sudo sed -i "s/#VerbosePkgLists/VerbosePkgLists/" /etc/pacman.conf
-sudo sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/" /etc/pacman.conf
+# Tweak pacman.conf
+sudo sed -i "s/#Color/Color/" /etc/pacman.conf &> /dev/null
+sudo sed -i "s/#VerbosePkgLists/VerbosePkgLists/" /etc/pacman.conf &> /dev/null
+sudo sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/" /etc/pacman.conf &> /dev/null
 
 if grep -Fxq "ILoveCandy" /etc/pacman.conf
 then
@@ -33,8 +37,10 @@ else
     sudo sed -i "/ParallelDownloads = 10/a ILoveCandy" /etc/pacman.conf
 fi
 
-sudo pacman -Syy --noconfirm &> /dev/null
+# Update system
+sudo pacman -Syu --noconfirm &> /dev/null
 
+# Install Paru
 if pacman -Qi paru &> /dev/null
 then
     echo -en "Paru is already installed. Skipping..."
