@@ -91,14 +91,6 @@ for i in groups:
                 lazy.group[i.name].toscreen(),
                 desc="Switch to group {}".format(i.name),
             ),
-            # mod1 + shift + letter of group = switch to & move focused window to group
-            # Key(
-            #     [mod, "shift"],
-            #     i.name,
-            #     lazy.window.togroup(i.name, switch_group=True),
-            #     desc="Switch to & move focused window to group {}".format(
-            #         i.name),
-            # ),
 
             # Or, use below if you prefer not to switch to that group.
             # mod1 + shift + letter of group = move focused window to group
@@ -108,7 +100,7 @@ for i in groups:
     )
 
 layoutConfigs = {
-    "border_normal": '#6c7086',
+    "border_normal": '#45475a',
     "border_width": 2,
     "border_focus": '#89dceb',
     "margin": 6,
@@ -117,18 +109,6 @@ layoutConfigs = {
 layouts = [
     layout.MonadTall(**layoutConfigs),
     layout.Max(),
-    # layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
-    # Try more layouts by unleashing below layouts.
-    # layout.Stack(num_stacks=2),
-    # layout.Bsp(),
-    # layout.Matrix(),
-
-    # layout.MonadWide(),
-    # layout.RatioTile(),
-    # layout.Tile(),
-    # layout.TreeTab(),
-    # layout.VerticalTile(),
-    # layout.Zoomy(),
 ]
 
 widget_defaults = dict(
@@ -145,17 +125,16 @@ screens = [
         wallpaper_mode='fill',
         top=bar.Bar(
             [
-
                 ################
                 # Left widgets #
                 ################
                 widget.GroupBox(
-                    padding_x=8,
-                    borderwidth=3,
+                    padding_x=6,
+                    borderwidth=4,
                     highlight_method="line",
                     highlight_color=['#89dceb', '#89dceb'],
                     active="#cdd6f4",
-                    block_highlight_text_color="#11111b",
+                    block_highlight_text_color="#0a3239",
                     this_current_screen_border="#49c9e0",
                     inactive="#45475a",
                 ),
@@ -169,14 +148,6 @@ screens = [
                 #################
                 # Right widgets #
                 #################
-                # widget.Volume(),
-                # widget.Backlight(
-                #     backlight_name="intel_backlight",
-                # ),
-                # widget.Sep(
-                #     linewidth=0,
-                #     padding=2
-                # ),
                 widget.TextBox(
                     "",
                     font="Font Awesome 6 Free Solid",
@@ -194,7 +165,6 @@ screens = [
                     colour_have_updates="#0a3239",
                     colour_no_updates="#0a3239",
                 ),
-                # widget.TextBox(" ", padding=0, margin=0),
                 widget.Sep(
                     linewidth=0,
                     padding=2
@@ -290,11 +260,9 @@ screens = [
                     background="#11111b",
                 ),
             ],
-            34,
+            34, # Bar height
             background="#11111b",
             foreground="#cdd6f4"
-            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
-            # border_color=["#ff00ff", "#000000", "#ff00ff","#000000"]  # borders are magenta
         ),
     ),
 ]
@@ -314,6 +282,9 @@ follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
 floating_layout = layout.Floating(
+    border_width=2,
+    border_focus="#89dceb",
+    border_normal="#45475a",
     float_rules=[
         # Run the utility of `xprop` to see the wm class and name of an X client.
         *layout.Floating.default_float_rules,
