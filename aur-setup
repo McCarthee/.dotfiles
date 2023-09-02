@@ -24,6 +24,8 @@ else
     sleep 2
 fi
 
+echo -en "\n"
+
 # Tweak pacman.conf
 sudo sed -i "s/#Color/Color/" /etc/pacman.conf &> /dev/null
 sudo sed -i "s/#VerbosePkgLists/VerbosePkgLists/" /etc/pacman.conf &> /dev/null
