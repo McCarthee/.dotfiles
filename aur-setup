@@ -6,14 +6,14 @@ if [ $EUID != 0 ]; then
     exit $?
 fi
 
-echo -en "\n"
-
 # Install chaotic-aur
 if grep -Fxq "[chaotic-aur]" /etc/pacman.conf
 then
+    echo -en "\n"
     echo -en "chaotic-aur is already installed. Skipping...\n"
     sleep 2
 else
+    echo -en "\n"
     echo -en "Installing chaotic-aur..."
     sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com &> /dev/null
     sudo pacman-key --lsign-key 3056513887B78AEB &> /dev/null
@@ -24,8 +24,6 @@ else
     sleep 2
 fi
 
-echo -en "\n"
-
 # Tweak pacman.conf
 sudo sed -i "s/#Color/Color/" /etc/pacman.conf &> /dev/null
 sudo sed -i "s/#VerbosePkgLists/VerbosePkgLists/" /etc/pacman.conf &> /dev/null
@@ -33,6 +31,7 @@ sudo sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/" /etc/pacman.conf 
 
 if grep -Fxq "ILoveCandy" /etc/pacman.conf
 then
+    echo -en "\n"
     echo -en "ILoveCandy already exists in pacman.conf. Skipping...\n"
     sleep 2
 else
@@ -45,11 +44,14 @@ sudo pacman -Syu --noconfirm &> /dev/null
 # Install Paru
 if pacman -Qi paru &> /dev/null
 then
+    echo -en "\n"
     echo -en "Paru is already installed. Skipping..."
     sleep 2
 else
+    echo -en "\n"
     echo "Installing Paru..."
     sudo pacman --noconfirm -S paru &> /dev/null
+    sudo sed -i "s/#BottomUp/BottomUp/" /etc/paru.conf &> /dev/null
     sleep 2
 fi
 
