@@ -3,3 +3,5 @@
 ^/README.*
 ^/LICENSE.*
 ^/COPYING
+/aur-setup
+/pkgs
