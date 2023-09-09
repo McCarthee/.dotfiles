@@ -215,6 +215,7 @@ screens = [
                     show_short_text=False,
                     background="#49c9e0",
                     foreground="#0a3239",
+                    update_interval=5
                 ),
                 widget.Battery(
                     format="{percent: .0%}",
